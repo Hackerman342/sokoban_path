@@ -1,3 +1,10 @@
+## Added ignores
+
+# VS Code
+*.vscode/
+
+## Standard C++ ignores
+
 # Prerequisites
 *.d
 
