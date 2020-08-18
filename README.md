@@ -7,6 +7,6 @@ Based on the introductory exercise (not a course requirement) for KTH Course DD2
 
 ## Basic Running
 * Compile with: `$ g++ -o exe_Name ScriptName.cpp`
-    * `g++ -o sokoban_path main.cpp`
-* Execute with: `$ .\exe_name.exe`
-    * `.\sokoban_path.exe`
+    * `g++ -o bin/sokoban_path src/main.cpp`
+* Execute with: `$ ./exe_name.exe`
+    * `./bin/sokoban_path.exe`

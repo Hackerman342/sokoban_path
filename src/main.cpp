@@ -11,26 +11,35 @@ int main()
 	int w = 0, h = 0;
 	int start, length, c, INT_MAX;
     bool flag = false;
-	std::vector <int> goals, free_space;
+	std::vector <int> goals, free_space, boxes;
 
 	// Read map file to character string
 	std::ifstream input("input_samples/00_sample.in");
     std::string s_map((std::istreambuf_iterator<char>(input)),std::istreambuf_iterator<char>());
-    //cout << s_map << endl;
+    std::cout << "Imported map" << std::endl;
+    std::cout << s_map << std::endl;
 
     // Step through map to characterize map
     length = s_map.size();
     for (int i =0; i<length; i++){
         c = s_map[i];
         if (c == '#' && !flag){w++;}
-        if (c == '\n'){h++; flag = true;}
-        if (c == '@'){start = i;}
-        if (c == '.'){goals.push_back(i);}
-        if (c == ' '){free_space.push_back(i);}
+        else if (c == '\n'){h++; flag = true;}
+        else if (c == '@'){start = i;}
+        else if (c == '.'){goals.push_back(i);}
+        else if (c == ' '){free_space.push_back(i);}
+        else if (c == '$'){boxes.push_back(i);}
     }
-    //for (int i=0; i<free_space.size(); i++){cout << free_space[i] << endl;}
-    //cout << start << "  " << goals[0] << "  " << goals[1] << endl;
-    //cout << s_map[16] << s_map[17] << s_map[18] << s_map[19];
+    std::cout << "free spaces" << std::endl;
+    for (int i=0; i<free_space.size(); i++){std::cout << free_space[i] << ", ";}
+    std::cout << std::endl << "start" << std::endl;
+    std::cout << start;
+    std::cout << std::endl << "goals" << std::endl;
+    for (int i=0; i<goals.size(); i++){std::cout << goals[i] << ", ";}
+    std::cout << std::endl << "boxes" << std::endl;
+    for (int i=0; i<boxes.size(); i++){std::cout << boxes[i] << ", ";}
+    std::cout << std::endl;
+
 
 
     /// Dijkstra's Algorithm to find goal
