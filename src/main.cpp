@@ -39,11 +39,11 @@ int main()
             free_space.push_back(Coordinate(x, y, INT_MAX));}
         else if (c == '@'){
             start = Coordinate(x, y, 0);
-            free_space.push_back(Coordinate(x, y, INT_MAX));}
+            free_space.push_back(Coordinate(x, y, 0));}
         else if (c == '+'){
             start = Coordinate(x, y, 0);
-            goals.push_back(Coordinate(x, y, INT_MAX));
-            free_space.push_back(Coordinate(x, y, INT_MAX));}
+            goals.push_back(Coordinate(x, y, 0));
+            free_space.push_back(Coordinate(x, y, 0));}
         else if (c == '$'){
             boxes.push_back(Coordinate(x, y, INT_MAX));}
         else if (c == '*'){
@@ -55,20 +55,20 @@ int main()
     }
 
     // Print map details
-    bool print_dist = false;
+    bool print_dist0 = false;
 
     std::cout << "start \n";
-    if (print_dist){
+    if (print_dist0){
     std::cout << "(" << start.x << ", " << start.y <<  ", " << start.dist << ")\n";}
     else {std::cout << "(" << start.x << ", " << start.y << ")\n";}
     std::cout << "goals \n";
-    print_coord_vector(goals, print_dist);
+    print_coord_vector(goals, print_dist0);
     std::cout << "free space \n";
-    print_coord_vector(free_space, print_dist);
+    print_coord_vector(free_space, print_dist0);
     std::cout << "walls \n";
-    print_coord_vector(walls, print_dist);
+    print_coord_vector(walls, print_dist0);
     std::cout << "boxes \n";
-    print_coord_vector(boxes, print_dist);
+    print_coord_vector(boxes, print_dist0);
 
 
     // Dijkstra's Algorithm to find goal without moving boxes
@@ -85,30 +85,13 @@ int main()
     std::vector < Coordinate > unchecked = free_space;
     Coordinate curr_pos = start;
     int curr_ind, min_dist = INT_MAX;
-    bool reached_goal = false;
 
-    print_dist = true;
-    std::cout << "unchecked \n";
-    print_coord_vector(unchecked, print_dist);
+    bool print_dist = true;
     std::cout << "checked \n";
     print_coord_vector(checked, print_dist);
-
-    // Find start in unchecked
-    for (int i=0; i<unchecked.size(); i++)
-    {
-        if (unchecked[i].x == start.x && unchecked[i].y == start.y)
-        {
-            unchecked[i].dist = start.dist;
-            curr_ind = i;
-            break;
-        }
-    }
-
     std::cout << "unchecked \n";
     print_coord_vector(unchecked, print_dist);
-    std::cout << "checked \n";
-    print_coord_vector(checked, print_dist);
-    std::cout << "Current index: " << curr_ind << "\n";
+
 
     while(unchecked.size()>0){
 
@@ -126,9 +109,17 @@ int main()
         {
 
             /*  FIND PATH FROM START TO GOAL */
+            std::string path;
 
-            unchecked.erase(unchecked.begin() + curr_ind);
-            checked.push_back(curr_pos);
+
+            // Just some print garbage below...
+
+            // unchecked.erase(unchecked.begin() + curr_ind);
+            // checked.push_back(curr_pos);
+            // std::cout << "checked \n";
+            // print_coord_vector(checked, print_dist);
+            // std::cout << "unchecked \n";
+            // print_coord_vector(unchecked, print_dist);
             return 0;
         }
         else if (min_dist == INT_MAX)
@@ -146,53 +137,29 @@ int main()
             if (unchecked[i].x == curr_pos.x + 1 && unchecked[i].y == curr_pos.y)
             {
                 unchecked[i].dist = std::min(unchecked[i].dist, curr_pos.dist + 1);
-                // if (unchecked[i].check_for_goal(goals))
-                // {
-                //     reached_goal = true;
-                //     break;
-                // }
             }
             if (unchecked[i].x == curr_pos.x - 1 && unchecked[i].y == curr_pos.y)
             {
                 unchecked[i].dist = std::min(unchecked[i].dist, curr_pos.dist + 1);
-                // if (unchecked[i].check_for_goal(goals))
-                // {
-                //     reached_goal = true;
-                //     break;
-                // }
             }
             if (unchecked[i].x == curr_pos.x && unchecked[i].y == curr_pos.y + 1)
             {
                 unchecked[i].dist = std::min(unchecked[i].dist, curr_pos.dist + 1);
-                // if (unchecked[i].check_for_goal(goals))
-                // {
-                //     reached_goal = true;
-                //     break;
-                // }
             }
             if (unchecked[i].x == curr_pos.x && unchecked[i].y == curr_pos.y - 1)
             {
                 unchecked[i].dist = std::min(unchecked[i].dist, curr_pos.dist + 1);
-                // if (unchecked[i].check_for_goal(goals))
-                // {
-                //     reached_goal = true;
-                //     break;
-                // }
             }
         }
+        // Update checked & unchecked vectors
         unchecked.erase(unchecked.begin() + curr_ind);
         checked.push_back(curr_pos);
 
-        std::cout << "unchecked \n";
-        print_coord_vector(unchecked, print_dist);
         std::cout << "checked \n";
         print_coord_vector(checked, print_dist);
-        std::cout << "Current index: " << curr_ind << "\n";
+        // std::cout << "unchecked \n";
+        // print_coord_vector(unchecked, print_dist);
 
-        if (reached_goal)
-        {
-            break;
-        }
     }
 
     return 0;
