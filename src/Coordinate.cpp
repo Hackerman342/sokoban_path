@@ -27,8 +27,6 @@ bool Coordinate::check_for_goal(std::vector < Coordinate > goals)
     {
         if (goals[i].x == this->x && goals[i].y == this->y )
         {
-            std::cout << "Reached Goal! \n";
-            std::cout << "(" << this->x  << ", " << this->y << ") \n";
             return true;
         }
     }
