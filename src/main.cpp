@@ -8,17 +8,24 @@
 #include "sokoban_util.cpp"
 #include "Coordinate.cpp"
 
-int main()
+
+int main( int argc, char* argv[] )
 {
     // Print information as problem is solved
     bool debug_flag = false;
+
+    // Read map_file arg given in command line
+    std:: string map_file;
+    if( argc == 2 ){map_file = argv[1];}
+    else {std::cout << "No map file passed in \n"; return 0;}
+
     // Initialize variables
 	int x = 0, y = 0; // Define coordinate system
     Coordinate start;
 	std::vector < Coordinate > walls, free_space, boxes, goals;
 
 	// Read map file to character string
-	std::ifstream input("input_samples/03_sample.in");
+	std::ifstream input(map_file);
     std::string s_map((std::istreambuf_iterator<char>(input)),std::istreambuf_iterator<char>());
     if (debug_flag){
         std::cout << "Imported map \n";
@@ -176,7 +183,8 @@ int main()
         if (debug_flag){std::cout << "current: " << curr_pos.x << ", " << curr_pos.y << ", " << curr_pos.dist << "\n";}
 
         // Check all directions and update distance
-        for (int i=0; i<unchecked.size(); i++){
+        for (int i=0; i<unchecked.size(); i++)
+        {
             if (unchecked[i].x == curr_pos.x + 1 && unchecked[i].y == curr_pos.y)
             {
                 unchecked[i].dist = std::min(unchecked[i].dist, curr_pos.dist + 1);

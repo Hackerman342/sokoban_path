@@ -8,5 +8,5 @@ Based on the introductory exercise (not a course requirement) for KTH Course DD2
 ## Basic Running
 * Compile with: `$ g++ -o exe_Name ScriptName.cpp`
     * `g++ -o bin/sokoban_path src/main.cpp`
-* Execute with: `$ ./exe_name.exe`
-    * `./bin/sokoban_path.exe`
+* Execute with: `$ ./exe_name map_file`
+    * `./bin/sokoban_path input_samples\00_sample.in`
