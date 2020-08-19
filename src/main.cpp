@@ -109,9 +109,48 @@ int main()
         {
 
             /*  FIND PATH FROM START TO GOAL */
+            std::cout << "Looking for path \n";
             std::string path;
+            while (true)
+            {
+                std::cout << "current: (" << curr_pos.x << ", " << curr_pos.y << ") \n";
+                for (Coordinate coord : checked)
+                {
+                    if (coord.x + 1 == curr_pos.x && coord.y == curr_pos.y)
+                    {
+                        path.append("D ");
+                        curr_pos = coord;
+                        break;
+                    }
+                    if (coord.x - 1 == curr_pos.x && coord.y == curr_pos.y)
+                    {
+                        path.append("U ");
+                        curr_pos = coord;
+                        break;
+                    }
+                    if (coord.x == curr_pos.x && coord.y + 1 == curr_pos.y)
+                    {
+                        path.append("R ");
+                        curr_pos = coord;
+                        break;
+                    }
+                    if (coord.x == curr_pos.x && coord.y - 1 == curr_pos.y)
+                    {
+                        path.append("L ");
+                        curr_pos = coord;
+                        break;
+                    }
 
-
+                }
+                if (curr_pos.x == start.x && curr_pos.y == start.y)
+                {
+                    std::cout << "final (start): (" << curr_pos.x << ", " << curr_pos.y << ") \n";
+                    std::reverse(path.begin(), path.end());
+                    std::cout << "Found path \n";
+                    std::cout << path << "\n";
+                    return 0;
+                }
+            }
             // Just some print garbage below...
 
             // unchecked.erase(unchecked.begin() + curr_ind);
