@@ -3,17 +3,20 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include<climits>
+
 #include "sokoban_util.cpp"
+#include "Coordinate.cpp"
 
 int main()
 {
     std::cout << "Started \n";
     // Initialize variables
 	int x = 0, y = 0; // Define coordinate system
-	int length, c, INT_MAX;
-    // bool flag = false;
-    std::pair <int, int> start;
-	std::vector < std::pair <int, int>> walls, free_space, boxes, goals;
+	int length;
+    char c;
+	std::vector < Coordinate > walls, free_space, boxes, goals;
+    Coordinate start;
 
 	// Read map file to character string
 	std::ifstream input("input_samples/00_sample.in");
@@ -25,61 +28,77 @@ int main()
     std::cout <<"x increases with rows, y with columns \n\n";
 
     // Step through map to characterize map
+    // Initialize all distance values to INT_MAX
     length = s_map.size();
     for (int i =0; i<length; i++){
         c = s_map[i];
+
         if (c == ' '){
-            free_space.push_back(std::make_pair(x, y));}
+            free_space.push_back(Coordinate(x, y, INT_MAX));}
         else if (c == '#'){
-            walls.push_back(std::make_pair(x, y));}
+            walls.push_back(Coordinate(x, y, INT_MAX));}
         else if (c == '.'){
-            goals.push_back(std::make_pair(x, y));
-            free_space.push_back(std::make_pair(x, y));}
+            goals.push_back(Coordinate(x, y, INT_MAX));
+            free_space.push_back(Coordinate(x, y, INT_MAX));}
         else if (c == '@'){
-            start = std::make_pair(x, y);
-            free_space.push_back(std::make_pair(x, y));}
+            start = Coordinate(x, y, INT_MAX);
+            free_space.push_back(Coordinate(x, y, INT_MAX));}
         else if (c == '+'){
-            start = std::make_pair(x, y);
-            goals.push_back(std::make_pair(x, y));
-            free_space.push_back(std::make_pair(x, y));}
+            start = Coordinate(x, y, INT_MAX);
+            goals.push_back(Coordinate(x, y, INT_MAX));
+            free_space.push_back(Coordinate(x, y, INT_MAX));}
         else if (c == '$'){
-            boxes.push_back(std::make_pair(x, y));}
+            boxes.push_back(Coordinate(x, y, INT_MAX));}
         else if (c == '*'){
-            boxes.push_back(std::make_pair(x, y));
-            goals.push_back(std::make_pair(x, y));}
+            boxes.push_back(Coordinate(x, y, INT_MAX));
+            goals.push_back(Coordinate(x, y, INT_MAX));}
         else if (c == '\n'){
             x++; y = -1;}
         y++;
     }
 
     // Print map details
+    bool print_dist = false;
     std::cout << "start \n";
-    std::cout << "(" << start.first << ", " << start.second << ")\n";
+    if (print_dist){
+    std::cout << "(" << start.x << ", " << start.y <<  ", " << start.dist << ")\n";}
+    else {std::cout << "(" << start.x << ", " << start.y << ")\n";}
     std::cout << "goals \n";
-    print_pair_vector(goals);
+    print_coord_vector(goals, print_dist);
     std::cout << "free space \n";
-    print_pair_vector(free_space);
+    print_coord_vector(free_space, print_dist);
     std::cout << "walls \n";
-    print_pair_vector(walls);
+    print_coord_vector(walls, print_dist);
     std::cout << "boxes \n";
-    print_pair_vector(boxes);
+    print_coord_vector(boxes, print_dist);
 
 
-    // /// Dijkstra's Algorithm to find goal
+    // Dijkstra's Algorithm to find goal without moving boxes
 
-    // // Initialize all free spaces as unchecked nodes
-    // // Initialize all initial distance values to INT_MAX
-    // // Initialize possible moves: {Up, Down, Left, Right}
-    // std::vector <int> checked;
-    // std::vector <int> unchecked = free_space;
+    // Initialize all free spaces as unchecked nodes
+    // Initialize all initial distance values to INT_MAX
+    // Initialize possible moves: {Up, Down, Left, Right}
+    std::vector < Coordinate > checked;
+    std::vector < Coordinate > unchecked = free_space;
     // std::vector <int> dist(free_space.size(),INT_MAX);
-    // std::vector <int> moves{-1*(w+1), w+1, -1, 1};
-    // int pos = start, posdist = 0;
-    // //int *ind;
+    // std::pair <int, int> curr_pos = start;
+
+    // Check if start is already at goal
+    for (int i=0; i<goals.size(); i++)
+    {
+        if (goals[i].x == start.x && goals[i].y == start.y )
+        {
+            std::cout << "Already at goal \n";
+        }
+    }
 
 
     // for (int i=0; i<dist.size(); i++){std::cout << dist[i] << "  " << unchecked[i] << std::endl;}
-    // //while(unchecked.size()>0){
+    // while(unchecked.size()>0){
+
+    //     std::vector<int>::iterator it = std::find(vecOfNums.begin(), vecOfNums.end(), 22);
+
+    // }
     // for (int h = 0; h < 3; h++){
     //     for(int i = 0; i < moves.size(); i++){
 
