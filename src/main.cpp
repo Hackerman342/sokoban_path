@@ -16,7 +16,7 @@ int main()
 	std::vector < Coordinate > walls, free_space, boxes, goals;
 
 	// Read map file to character string
-	std::ifstream input("input_samples/00_sample.in");
+	std::ifstream input("input_samples/03_sample.in");
     std::string s_map((std::istreambuf_iterator<char>(input)),std::istreambuf_iterator<char>());
     std::cout << "Imported map \n";
     std::cout << s_map;
