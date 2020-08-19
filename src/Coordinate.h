@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #pragma once
 
 // Header file for Coordinate class
@@ -21,4 +22,6 @@ public:
     int x;
     int y;
     int dist;
+
+    bool check_for_goal(std::vector < Coordinate > goals);
 };

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include "Coordinate.h"
 #pragma once
 
@@ -19,3 +20,18 @@ Coordinate::Coordinate(int x, int y, int dist)
 
 // Destructor
 Coordinate::~Coordinate(){}
+
+bool Coordinate::check_for_goal(std::vector < Coordinate > goals)
+{
+    for (int i=0; i<goals.size(); i++)
+    {
+        if (goals[i].x == this->x && goals[i].y == this->y )
+        {
+            std::cout << "Reached Goal! \n";
+            std::cout << "(" << this->x  << ", " << this->y << ") \n";
+            return true;
+        }
+    }
+    return false;
+}
+
