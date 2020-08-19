@@ -48,7 +48,9 @@ int main()
             boxes.push_back(Coordinate(x, y, INT_MAX));}
         else if (c == '*'){
             boxes.push_back(Coordinate(x, y, INT_MAX));
-            goals.push_back(Coordinate(x, y, INT_MAX));}
+            // Goals with boxes cannot be accessed without pushing
+            // goals.push_back(Coordinate(x, y, INT_MAX));
+            }
         else if (c == '\n'){
             x++; y = -1;}
         y++;
